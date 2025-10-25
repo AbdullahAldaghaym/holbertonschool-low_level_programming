@@ -27,3 +27,7 @@ void more_numbers(void);
 ### print_line
 ```c
 void print_line(int n);
+
+### print_diagonal
+```c
+void print_diagonal(int n);
