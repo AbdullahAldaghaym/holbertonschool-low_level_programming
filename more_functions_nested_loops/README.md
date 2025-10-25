@@ -3,3 +3,8 @@
 This project contains C programs that demonstrate more advanced functions and nested loops.
 
 ## Project Structure
+
+### _isdigit
+```c
+int _isdigit(int c);
+
