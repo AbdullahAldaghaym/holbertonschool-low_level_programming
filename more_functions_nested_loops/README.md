@@ -23,3 +23,7 @@ void print_most_numbers(void);
 ### more_numbers
 ```c
 void more_numbers(void);
+
+### print_line
+```c
+void print_line(int n);
