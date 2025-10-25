@@ -9,22 +9,22 @@
  */
 char *_strcat(char *dest, char *src)
 {
-    char *ptr = dest;
+	char *ptr = dest;
 
-    /* Move to the end of dest */
-    while (*ptr != '\0')
-        ptr++;
+	/* Move to the end of dest */
+	while (*ptr != '\0')
+		ptr++;
 
-    /* Copy src to end of dest */
-    while (*src != '\0')
-    {
-        *ptr = *src;
-        ptr++;
-        src++;
-    }
+	/* Copy src to end of dest */
+	while (*src != '\0')
+	{
+		*ptr = *src;
+		ptr++;
+		src++;
+	}
 
-    /* Add null terminator */
-    *ptr = '\0';
+	/* Add null terminator */
+	*ptr = '\0';
 
-    return (dest);
+	return (dest);
 }
