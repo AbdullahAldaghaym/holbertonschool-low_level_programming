@@ -15,3 +15,7 @@ int _strlen(char *s);
 ### _puts
 ```c
 void _puts(char *str);
+
+### print_rev
+```c
+void print_rev(char *s);
