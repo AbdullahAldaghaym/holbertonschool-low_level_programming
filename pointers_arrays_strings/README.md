@@ -11,3 +11,7 @@ void swap_int(int *a, int *b);
 ### _strlen
 ```c
 int _strlen(char *s);
+
+### _puts
+```c
+void _puts(char *str);
