@@ -11,3 +11,7 @@ int _isdigit(int c);
 ### mul
 ```c
 int mul(int a, int b);
+
+### print_numbers
+```c
+void print_numbers(void);
