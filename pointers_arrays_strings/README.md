@@ -23,3 +23,7 @@ void print_rev(char *s);
 ### rev_string
 ```c
 void rev_string(char *s);
+
+### puts2
+```c
+void puts2(char *str);
