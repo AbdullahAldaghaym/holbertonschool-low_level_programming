@@ -7,3 +7,7 @@ This project contains C programs that demonstrate various operations with pointe
 ### swap_int
 ```c
 void swap_int(int *a, int *b);
+
+### _strlen
+```c
+int _strlen(char *s);
