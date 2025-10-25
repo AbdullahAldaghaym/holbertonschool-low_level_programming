@@ -8,3 +8,6 @@ This project contains C programs that demonstrate more advanced functions and ne
 ```c
 int _isdigit(int c);
 
+### mul
+```c
+int mul(int a, int b);
