@@ -19,3 +19,7 @@ void print_numbers(void);
 ### print_most_numbers
 ```c
 void print_most_numbers(void);
+
+### more_numbers
+```c
+void more_numbers(void);
