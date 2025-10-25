@@ -19,3 +19,7 @@ void _puts(char *str);
 ### print_rev
 ```c
 void print_rev(char *s);
+
+### rev_string
+```c
+void rev_string(char *s);
