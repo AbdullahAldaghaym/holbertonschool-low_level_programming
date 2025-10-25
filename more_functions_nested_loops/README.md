@@ -47,3 +47,7 @@ void print_triangle(int size);
 ### Prime Factor
 ```c
 int main(void);
+
+### print_number
+```c
+void print_number(int n);
