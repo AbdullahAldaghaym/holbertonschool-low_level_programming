@@ -31,3 +31,7 @@ void print_line(int n);
 ### print_diagonal
 ```c
 void print_diagonal(int n);
+
+### print_square
+```c
+void print_square(int size);
