@@ -39,3 +39,7 @@ void print_square(int size);
 ### Fizz-Buzz
 ```c
 int main(void);
+
+### print_triangle
+```c
+void print_triangle(int size);
