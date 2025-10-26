@@ -31,3 +31,7 @@ void puts2(char *str);
 ### puts_half
 ```c
 void puts_half(char *str);
+
+### print_array
+```c
+void print_array(int *a, int n);
