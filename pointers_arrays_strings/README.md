@@ -43,3 +43,7 @@ char *_strcpy(char *dest, char *src);
 ### _atoi
 ```c
 int _atoi(char *s);
+
+### Password Generator
+```c
+int main(void);
