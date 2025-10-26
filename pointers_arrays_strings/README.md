@@ -39,3 +39,7 @@ void print_array(int *a, int n);
 ### _strcpy
 ```c
 char *_strcpy(char *dest, char *src);
+
+### _atoi
+```c
+int _atoi(char *s);
