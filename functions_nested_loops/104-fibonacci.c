@@ -7,18 +7,19 @@
  */
 int main(void)
 {
-	int i;
+	int i = 3;
 	unsigned long a = 1, b = 2, c;
 	unsigned long a1, a2, b1, b2, c1, c2;
 
 	printf("%lu, %lu", a, b);
 
-	for (i = 3; i <= 92; i++)
+	while (i <= 92)
 	{
 		c = a + b;
 		printf(", %lu", c);
 		a = b;
 		b = c;
+		i++;
 	}
 
 	a1 = a / 10000000000;
@@ -26,7 +27,7 @@ int main(void)
 	b1 = b / 10000000000;
 	b2 = b % 10000000000;
 
-	for (; i <= 98; i++)
+	while (i <= 98)
 	{
 		c1 = a1 + b1;
 		c2 = a2 + b2;
@@ -46,6 +47,7 @@ int main(void)
 		a2 = b2;
 		b1 = c1;
 		b2 = c2;
+		i++;
 	}
 	printf("\n");
 	return (0);
