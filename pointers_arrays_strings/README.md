@@ -35,3 +35,7 @@ void puts_half(char *str);
 ### print_array
 ```c
 void print_array(int *a, int n);
+
+### _strcpy
+```c
+char *_strcpy(char *dest, char *src);
