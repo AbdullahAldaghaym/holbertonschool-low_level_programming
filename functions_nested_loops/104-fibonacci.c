@@ -7,56 +7,45 @@
  */
 int main(void)
 {
-	int count;
-	unsigned long int fib1 = 0, fib2 = 1, next;
-	unsigned long int fib1_half1, fib1_half2, fib2_half1, fib2_half2;
-	unsigned long int half1, half2;
+	int i;
+	unsigned long a = 1, b = 2, c;
+	unsigned long a1, a2, b1, b2, c1, c2;
 
-	/* Print first 92 numbers (fit in unsigned long int) */
-	for (count = 1; count <= 92; count++)
+	printf("%lu, %lu", a, b);
+
+	for (i = 3; i <= 92; i++)
 	{
-		next = fib1 + fib2;
-		printf("%lu", next);
-		fib1 = fib2;
-		fib2 = next;
-		if (count != 92)
-			printf(", ");
+		c = a + b;
+		printf(", %lu", c);
+		a = b;
+		b = c;
 	}
 
-	/* Split the last two numbers for big number arithmetic */
-	fib1_half1 = fib1 / 10000000000;
-	fib1_half2 = fib1 % 10000000000;
-	fib2_half1 = fib2 / 10000000000;
-	fib2_half2 = fib2 % 10000000000;
+	a1 = a / 10000000000;
+	a2 = a % 10000000000;
+	b1 = b / 10000000000;
+	b2 = b % 10000000000;
 
-	/* Print last 6 numbers (93-98) using big number arithmetic */
-	for (count = 93; count <= 98; count++)
+	for (; i <= 98; i++)
 	{
-		/* Add the two halves */
-		half1 = fib1_half1 + fib2_half1;
-		half2 = fib1_half2 + fib2_half2;
-		
-		/* Handle carry from lower half to upper half */
-		if (half2 > 9999999999)
+		c1 = a1 + b1;
+		c2 = a2 + b2;
+		if (c2 > 9999999999)
 		{
-			half1 += half2 / 10000000000;
-			half2 = half2 % 10000000000;
+			c1 += c2 / 10000000000;
+			c2 %= 10000000000;
 		}
 
-		/* Print the number */
-		if (half1 > 0)
-			printf("%lu%010lu", half1, half2);
+		printf(", ");
+		if (c1)
+			printf("%lu%010lu", c1, c2);
 		else
-			printf("%lu", half2);
+			printf("%lu", c2);
 
-		if (count != 98)
-			printf(", ");
-
-		/* Shift numbers for next iteration */
-		fib1_half1 = fib2_half1;
-		fib1_half2 = fib2_half2;
-		fib2_half1 = half1;
-		fib2_half2 = half2;
+		a1 = b1;
+		a2 = b2;
+		b1 = c1;
+		b2 = c2;
 	}
 	printf("\n");
 	return (0);
