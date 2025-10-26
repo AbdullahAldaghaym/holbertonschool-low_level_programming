@@ -1,45 +1,5 @@
 #include <stdio.h>
 
-#define MAX_DIGITS 100
-
-/**
- * add_strings - adds two numbers represented as strings
- * @a: first number string
- * @b: second number string
- * @result: buffer to store result
- */
-void add_strings(char a[], char b[], char result[])
-{
-	int carry = 0;
-	int i, digit_sum;
-	char temp;
-
-	/* Add digits from right to left */
-	for (i = 0; i < MAX_DIGITS; i++)
-	{
-		digit_sum = (a[i] - '0') + (b[i] - '0') + carry;
-		carry = digit_sum / 10;
-		result[i] = (digit_sum % 10) + '0';
-	}
-}
-
-/**
- * print_number - prints a number stored as string (without leading zeros)
- * @num: number as string (stored in reverse)
- */
-void print_number(char num[])
-{
-	int i = MAX_DIGITS - 1;
-
-	/* Skip leading zeros */
-	while (i > 0 && num[i] == '0')
-		i--;
-
-	/* Print the number */
-	for (; i >= 0; i--)
-		putchar(num[i]);
-}
-
 /**
  * main - prints first 98 Fibonacci numbers
  *
@@ -47,35 +7,45 @@ void print_number(char num[])
  */
 int main(void)
 {
-	char a[MAX_DIGITS] = {0};
-	char b[MAX_DIGITS] = {0};
-	char next[MAX_DIGITS] = {0};
-	int i;
+	int count;
+	unsigned long int fib1 = 0, fib2 = 1, next;
+	unsigned long int fib1_half1, fib1_half2, fib2_half1, fib2_half2;
+	unsigned long int half1, half2;
 
-	/* Initialize first two Fibonacci numbers */
-	a[0] = '1';  /* 1 */
-	b[0] = '2';  /* 2 */
-
-	/* Print first two numbers */
-	print_number(a);
-	printf(", ");
-	print_number(b);
-
-	/* Generate and print next 96 numbers */
-	for (i = 3; i <= 98; i++)
+	for (count = 1; count <= 92; count++)
 	{
-		add_strings(a, b, next);
-		printf(", ");
-		print_number(next);
-
-		/* Shift numbers: a = b, b = next */
-		for (int j = 0; j < MAX_DIGITS; j++)
-		{
-			a[j] = b[j];
-			b[j] = next[j];
-		}
+		next = fib1 + fib2;
+		printf("%lu", next);
+		fib1 = fib2;
+		fib2 = next;
+		if (count != 92)
+			printf(", ");
 	}
 
+	fib1_half1 = fib1 / 10000000000;
+	fib1_half2 = fib1 % 10000000000;
+	fib2_half1 = fib2 / 10000000000;
+	fib2_half2 = fib2 % 10000000000;
+
+	for (count = 93; count <= 98; count++)
+	{
+		half1 = fib1_half1 + fib2_half1;
+		half2 = fib1_half2 + fib2_half2;
+		if (fib1_half2 + fib2_half2 > 9999999999)
+		{
+			half1 += 1;
+			half2 %= 10000000000;
+		}
+
+		printf("%lu%010lu", half1, half2);
+		if (count != 98)
+			printf(", ");
+
+		fib1_half1 = fib2_half1;
+		fib1_half2 = fib2_half2;
+		fib2_half1 = half1;
+		fib2_half2 = half2;
+	}
 	printf("\n");
 	return (0);
 }
