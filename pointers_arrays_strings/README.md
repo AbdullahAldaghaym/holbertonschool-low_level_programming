@@ -59,3 +59,7 @@ char *_strchr(char *s, char c);
 ### _strspn
 ```c
 unsigned int _strspn(char *s, char *accept);
+
+### _strpbrk
+```c
+char *_strpbrk(char *s, char *accept);
