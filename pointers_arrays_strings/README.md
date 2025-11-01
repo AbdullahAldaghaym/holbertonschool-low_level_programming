@@ -55,3 +55,7 @@ char *_memcpy(char *dest, char *src, unsigned int n);
 ### _strchr
 ```c
 char *_strchr(char *s, char c);
+
+### _strspn
+```c
+unsigned int _strspn(char *s, char *accept);
