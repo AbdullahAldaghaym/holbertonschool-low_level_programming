@@ -47,3 +47,7 @@ int _atoi(char *s);
 ### Password Generator
 ```c
 int main(void);
+
+### _memcpy
+```c
+char *_memcpy(char *dest, char *src, unsigned int n);
