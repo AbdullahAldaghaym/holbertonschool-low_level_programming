@@ -63,3 +63,7 @@ unsigned int _strspn(char *s, char *accept);
 ### _strpbrk
 ```c
 char *_strpbrk(char *s, char *accept);
+
+### _strstr
+```c
+char *_strstr(char *haystack, char *needle);
