@@ -1,144 +1,80 @@
 #include "main.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <ctype.h>
 
-/**
- * is_digit - checks if a string contains only digits
- * @s: string to check
- *
- * Return: 1 if only digits, 0 otherwise
- */
 int is_digit(char *s)
 {
-    int i = 0;
-
-    while (s[i])
-    {
-        if (s[i] < '0' || s[i] > '9')
-            return (0);
-        i++;
-    }
+    if (!s || !*s) return (0);
+    while (*s) if (*s < '0' || *s++ > '9') return (0);
     return (1);
 }
 
-/**
- * _strlen - returns the length of a string
- * @s: string to measure
- *
- * Return: length of string
- */
 int _strlen(char *s)
 {
     int len = 0;
-
-    while (s[len])
-        len++;
+    while (s[len]) len++;
     return (len);
 }
 
-/**
- * errors - handles errors for main
- */
-void errors(void)
-{
-    printf("Error\n");
-    exit(98);
-}
-
-/**
- * multiply - multiplies two positive numbers
- * @s1: first number
- * @s2: second number
- *
- * Return: pointer to result string
- */
 char *multiply(char *s1, char *s2)
 {
-    int len1, len2, total_len, i, j, carry, n1, n2, sum;
-    char *result;
-    char *final_result;
+    int l1 = _strlen(s1), l2 = _strlen(s2), total = l1 + l2;
+    char *res = malloc(total + 1), *final;
+    int i, j, carry, n1, n2, sum;
 
-    len1 = _strlen(s1);
-    len2 = _strlen(s2);
-    total_len = len1 + len2;
-    result = malloc(total_len + 1);
-    if (result == NULL)
-        errors();
+    if (!res) return (NULL);
+    for (i = 0; i < total; i++) res[i] = '0';
+    res[total] = '\0';
 
-    /* Initialize result with zeros */
-    for (i = 0; i < total_len; i++)
-        result[i] = '0';
-    result[total_len] = '\0';
-
-    /* Multiply each digit and add to result */
-    for (i = len1 - 1; i >= 0; i--)
+    for (i = l1 - 1; i >= 0; i--)
     {
         carry = 0;
         n1 = s1[i] - '0';
-
-        for (j = len2 - 1; j >= 0; j--)
+        for (j = l2 - 1; j >= 0; j--)
         {
             n2 = s2[j] - '0';
-            sum = (n1 * n2) + (result[i + j + 1] - '0') + carry;
+            sum = n1 * n2 + (res[i + j + 1] - '0') + carry;
             carry = sum / 10;
-            result[i + j + 1] = (sum % 10) + '0';
+            res[i + j + 1] = (sum % 10) + '0';
         }
-        if (carry > 0)
-            result[i] += carry;
+        if (carry) res[i] += carry;
     }
 
-    /* Remove leading zeros */
     i = 0;
-    while (result[i] == '0' && result[i + 1] != '\0')
-        i++;
+    while (i < total - 1 && res[i] == '0') i++;
 
-    /* If all zeros, return "0" */
-    if (result[i] == '0' && result[i + 1] == '\0')
-    {
-        final_result = malloc(2);
-        final_result[0] = '0';
-        final_result[1] = '\0';
-        free(result);
-        return (final_result);
-    }
-
-    /* Create new string without leading zeros */
-    final_result = malloc(total_len - i + 1);
-    if (final_result == NULL)
-    {
-        free(result);
-        errors();
-    }
-
-    for (j = 0; j < total_len - i; j++)
-        final_result[j] = result[i + j];
-    final_result[total_len - i] = '\0';
-
-    free(result);
-    return (final_result);
+    final = malloc(total - i + 1);
+    if (!final) { free(res); return (NULL); }
+    for (j = 0; j < total - i; j++) final[j] = res[i + j];
+    final[total - i] = '\0';
+    free(res);
+    return (final);
 }
 
-/**
- * main - multiplies two positive numbers
- * @argc: number of arguments
- * @argv: array of arguments
- *
- * Return: 0 on success
- */
 int main(int argc, char *argv[])
 {
-    char *result;
+    char *res;
 
-    if (argc != 3)
-        errors();
+    if (argc != 3 || !is_digit(argv[1]) || !is_digit(argv[2]))
+    {
+        printf("Error\n");
+        return (98);
+    }
 
-    if (!is_digit(argv[1]) || !is_digit(argv[2]))
-        errors();
+    if (argv[1][0] == '0' || argv[2][0] == '0')
+    {
+        printf("0\n");
+        return (0);
+    }
 
-    result = multiply(argv[1], argv[2]);
-    printf("%s\n", result);
-    free(result);
+    res = multiply(argv[1], argv[2]);
+    if (!res)
+    {
+        printf("Error\n");
+        return (98);
+    }
 
+    printf("%s\n", res);
+    free(res);
     return (0);
 }
