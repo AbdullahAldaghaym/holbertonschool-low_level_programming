@@ -2,33 +2,33 @@
 #include <stdlib.h>
 
 /**
- * _strlen - calculates the length of a string
+ * get_string_length - gets length of string
  * @s: string to measure
  *
- * Return: length of string
+ * Return: length
  */
-int _strlen(char *s)
+int get_string_length(char *s)
 {
-	int len = 0;
+	int length = 0;
 
-	while (s[len] != '\0')
-		len++;
+	while (s[length])
+		length++;
 
-	return (len);
+	return (length);
 }
 
 /**
- * _strcpy - copies a string
- * @dest: destination buffer
- * @src: source string
+ * copy_string - copies string to new memory
+ * @dest: destination
+ * @src: source
  *
- * Return: pointer to dest
+ * Return: dest
  */
-char *_strcpy(char *dest, char *src)
+char *copy_string(char *dest, char *src)
 {
 	int i = 0;
 
-	while (src[i] != '\0')
+	while (src[i])
 	{
 		dest[i] = src[i];
 		i++;
@@ -39,55 +39,46 @@ char *_strcpy(char *dest, char *src)
 }
 
 /**
- * new_dog - creates a new dog
- * @name: name of the dog
- * @age: age of the dog
- * @owner: owner of the dog
+ * new_dog - creates new dog with copied strings
+ * @name: dog name
+ * @age: dog age
+ * @owner: dog owner
  *
- * Return: pointer to new dog, NULL if fails
+ * Return: new dog pointer
  */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	dog_t *new_dog;
-	char *name_copy, *owner_copy;
+	dog_t *dog;
+	char *name_cpy, *owner_cpy;
 	int name_len, owner_len;
 
-	/* Allocate memory for the dog structure */
-	new_dog = malloc(sizeof(dog_t));
-	if (new_dog == NULL)
+	dog = malloc(sizeof(dog_t));
+	if (!dog)
 		return (NULL);
 
-	/* Calculate string lengths using custom function */
-	name_len = _strlen(name);
-	owner_len = _strlen(owner);
+	name_len = get_string_length(name);
+	owner_len = get_string_length(owner);
 
-	/* Allocate memory for name copy */
-	name_copy = malloc(name_len + 1);
-	if (name_copy == NULL)
+	name_cpy = malloc(name_len + 1);
+	if (!name_cpy)
 	{
-		free(new_dog);
+		free(dog);
 		return (NULL);
 	}
+	copy_string(name_cpy, name);
 
-	/* Copy name using custom function */
-	_strcpy(name_copy, name);
-
-	/* Allocate memory for owner copy */
-	owner_copy = malloc(owner_len + 1);
-	if (owner_copy == NULL)
+	owner_cpy = malloc(owner_len + 1);
+	if (!owner_cpy)
 	{
-		free(name_copy);
-		free(new_dog);
+		free(name_cpy);
+		free(dog);
 		return (NULL);
 	}
+	copy_string(owner_cpy, owner);
 
-	/* Copy owner using custom function */
-	_strcpy(owner_copy, owner);
+	dog->name = name_cpy;
+	dog->age = age;
+	dog->owner = owner_cpy;
 
-	/* Assign values to the new dog */
-	new_dog->name = name_copy;
-	new_dog->age = age;
-	new_dog->owner = owner_copy;
-
-	return (new_dog);
+	return (dog);
 }
