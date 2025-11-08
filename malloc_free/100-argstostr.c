@@ -2,6 +2,22 @@
 #include <stdlib.h>
 
 /**
+ * _strlen - calculates string length
+ * @s: string to measure
+ *
+ * Return: length of string
+ */
+int _strlen(char *s)
+{
+	int len = 0;
+
+	while (s[len] != '\0')
+		len++;
+
+	return (len);
+}
+
+/**
  * argstostr - concatenates all the arguments of the program
  * @ac: argument count
  * @av: argument vector
@@ -11,34 +27,21 @@
 char *argstostr(int ac, char **av)
 {
 	char *str;
-	int i, j, k = 0, total_len = 0;
+	int i, k = 0, total_len = 0;
 
-	/* Check for invalid inputs */
 	if (ac == 0 || av == NULL)
 		return (NULL);
 
-	/* Calculate total length needed */
 	for (i = 0; i < ac; i++)
-	{
-		j = 0;
-		while (av[i][j] != '\0')
-		{
-			total_len++;
-			j++;
-		}
-		total_len++; /* For newline character */
-	}
-	total_len++; /* For null terminator */
+		total_len += _strlen(av[i]) + 1;
 
-	/* Allocate memory */
-	str = malloc(total_len * sizeof(char));
+	str = malloc(total_len + 1);
 	if (str == NULL)
 		return (NULL);
 
-	/* Copy arguments with newlines */
 	for (i = 0; i < ac; i++)
 	{
-		j = 0;
+		int j = 0;
 		while (av[i][j] != '\0')
 		{
 			str[k] = av[i][j];
