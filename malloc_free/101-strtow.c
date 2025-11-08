@@ -2,27 +2,105 @@
 #include <stdlib.h>
 
 /**
+ * is_space - checks if character is space
+ * @c: character to check
+ *
+ * Return: 1 if space, 0 otherwise
+ */
+int is_space(char c)
+{
+	return (c == ' ');
+}
+
+/**
+ * skip_spaces - moves pointer past spaces
+ * @str: string pointer
+ *
+ * Return: pointer to next non-space character
+ */
+char *skip_spaces(char *str)
+{
+	while (is_space(*str))
+		str++;
+	return (str);
+}
+
+/**
+ * word_length - calculates length of current word
+ * @str: string
+ *
+ * Return: length of word
+ */
+int word_length(char *str)
+{
+	int len = 0;
+
+	while (*str && !is_space(*str))
+	{
+		len++;
+		str++;
+	}
+	return (len);
+}
+
+/**
  * count_words - counts words in string
- * @s: string
+ * @str: string
  *
  * Return: word count
  */
-int count_words(char *s)
+int count_words(char *str)
 {
-	int flag = 0, wc = 0;
+	int count = 0;
 
-	while (*s)
+	if (str == NULL || *str == '\0')
+		return (0);
+
+	str = skip_spaces(str);
+	while (*str)
 	{
-		if (*s == ' ')
-			flag = 0;
-		else if (flag == 0)
-		{
-			flag = 1;
-			wc++;
-		}
-		s++;
+		count++;
+		str += word_length(str);
+		str = skip_spaces(str);
 	}
-	return (wc);
+	return (count);
+}
+
+/**
+ * copy_word - copies a word to new memory
+ * @str: source string
+ * @len: word length
+ *
+ * Return: pointer to new word, or NULL if fails
+ */
+char *copy_word(char *str, int len)
+{
+	char *word;
+	int i;
+
+	word = malloc(len + 1);
+	if (word == NULL)
+		return (NULL);
+
+	for (i = 0; i < len; i++)
+		word[i] = str[i];
+	word[i] = '\0';
+
+	return (word);
+}
+
+/**
+ * free_words - frees allocated words array
+ * @words: words array
+ * @count: number of words allocated
+ */
+void free_words(char **words, int count)
+{
+	int i;
+
+	for (i = 0; i < count; i++)
+		free(words[i]);
+	free(words);
 }
 
 /**
@@ -33,46 +111,34 @@ int count_words(char *s)
  */
 char **strtow(char *str)
 {
-	char **matrix, *tmp;
-	int i, k = 0, len = 0, words, c = 0, start, end;
+	char **words;
+	int i = 0, words_count, len;
 
 	if (str == NULL || *str == '\0')
 		return (NULL);
 
-	words = count_words(str);
-	if (words == 0)
+	words_count = count_words(str);
+	if (words_count == 0)
 		return (NULL);
 
-	matrix = malloc((words + 1) * sizeof(char *));
-	if (matrix == NULL)
+	words = malloc((words_count + 1) * sizeof(char *));
+	if (words == NULL)
 		return (NULL);
 
-	for (i = 0; i <= (int)_strlen(str); i++)
+	str = skip_spaces(str);
+	while (*str && i < words_count)
 	{
-		if (str[i] == ' ' || str[i] == '\0')
+		len = word_length(str);
+		words[i] = copy_word(str, len);
+		if (words[i] == NULL)
 		{
-			if (c)
-			{
-				end = i;
-				tmp = malloc((c + 1) * sizeof(char));
-				if (tmp == NULL)
-				{
-					for (k = 0; k < words; k++)
-						free(matrix[k]);
-					free(matrix);
-					return (NULL);
-				}
-				for (len = 0; start < end; start++)
-					tmp[len++] = str[start];
-				tmp[len] = '\0';
-				matrix[k] = tmp;
-				k++;
-				c = 0;
-			}
+			free_words(words, i);
+			return (NULL);
 		}
-		else if (c++ == 0)
-			start = i;
+		str += len;
+		str = skip_spaces(str);
+		i++;
 	}
-	matrix[k] = NULL;
-	return (matrix);
+	words[i] = NULL;
+	return (words);
 }
